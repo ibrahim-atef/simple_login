@@ -1,0 +1,17 @@
+[
+  {
+    "name": "LEVI ACK",
+    "dose": "three times per day",
+    "strength": "very strong"
+  },
+  {
+    "name": "Mohamed ahmed",
+    "dose": "two times per day",
+    "strength": "very weak"
+  },
+  {
+    "name": "ichero oda",
+    "dose": "four times per day",
+    "strength": "meduim"
+  }
+]
