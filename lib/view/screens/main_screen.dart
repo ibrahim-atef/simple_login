@@ -16,14 +16,16 @@ class MainScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Main Screen'),
-        actions: [GetBuilder<AuthController>(builder: (_) {
-          return IconButton(
-            icon: Icon(Icons.exit_to_app),
-            onPressed: () {
-              authController.signOutFromApp();
-            },
-          );
-        })],
+        actions: [
+          GetBuilder<AuthController>(builder: (_) {
+            return IconButton(
+              icon: Icon(Icons.exit_to_app),
+              onPressed: () {
+                authController.signOutFromApp();
+              },
+            );
+          })
+        ],
       ),
       body: Center(
         child: Column(
@@ -59,29 +61,38 @@ class MainScreen extends StatelessWidget {
               "strength",
             ),
             buildDivider(),
-            GetBuilder<MainController>(
+            GetBuilder<MainController>(initState:mainController.getDummyData(),
               builder: (_) {
                 return SizedBox(
                   height: Get.height * .5,
-                  child: mainController.dummyDataList.length != 0
+                  child: mainController
+                    .associatedDrug
+                              .length !=
+                          0
                       ? ListView.separated(
-                          itemCount: mainController.dummyDataList.length,
+                          itemCount: mainController
+                              .associatedDrug.length,
                           separatorBuilder: (context, index) {
                             return buildDivider();
                           },
                           itemBuilder: (context, index) {
                             return buildRowItem(
-                                mainController.dummyDataList[index].name,
-                                mainController.dummyDataList[index].dose,
-                                mainController.dummyDataList[index].strength);
+                                mainController
+                                    .associatedDrug[index]
+                                    . name,
+                                mainController
+                                    .associatedDrug[index]
+                                    .dose,
+                                mainController
+                                    .associatedDrug[index]
+                                    .strength);
                           })
                       : SizedBox(
-                        height: Get.height * .5,
-                        child: Center(
-                          child: Text("No data"),
+                          height: Get.height * .5,
+                          child: Center(
+                            child: Text("No data"),
+                          ),
                         ),
-
-                  ),
                 );
               },
             ),
