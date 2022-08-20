@@ -15,9 +15,6 @@ class AuthController extends GetxController {
 
   ////////////////////////////////////////////////
   final GetStorage authBox = GetStorage();
-  bool isChecked = false;
-  var patientGender = "".obs;
-  String gender = "Gender";
 
   var uid;
 
@@ -28,6 +25,7 @@ class AuthController extends GetxController {
     isVisibilty = !isVisibilty;
     update();
   }
+//////////////////////////////////////////////////////////////////////signup with firebase///////////////////////////
 
   void signUpUsingFirebase({
     required String name,
@@ -45,6 +43,9 @@ class AuthController extends GetxController {
         update();
 
         auth.currentUser!.updateDisplayName(name);
+        ///here to store user name and  in some local storage
+        await authBox.write(KName, value.user!.displayName);
+
         Get.off(() => MainScreen());
 
         update();
@@ -75,7 +76,6 @@ class AuthController extends GetxController {
           buttonColor: mainColor2,
           cancelTextColor: mainColor,
           backgroundColor: white);
-
     } catch (error) {
       Get.snackbar(
         "Error",
@@ -99,6 +99,8 @@ class AuthController extends GetxController {
           .signInWithEmailAndPassword(email: email, password: password)
           .then((value) async {
         authBox.write(KUid, value.user!.uid.toString());
+        ///here to store user name and  in some local storage
+        await authBox.write(KName, value.user!.displayName);
 
         Get.off(() => MainScreen());
         isLoading.value = false;
@@ -142,6 +144,7 @@ class AuthController extends GetxController {
       print(error);
     }
   }
+
   ////////////////////////////////signOut//////////////////////////////////////
   void signOutFromApp() async {
     try {
@@ -151,7 +154,7 @@ class AuthController extends GetxController {
       authBox.erase();
 
       update();
-      Get.offAll( () => LoginScreen());
+      Get.offAll(() => LoginScreen());
     } catch (error) {
       Get.defaultDialog(
           title: "Error",

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:simple_login/model/dummy_data_model.dart';
-import 'dart:convert';
-import 'package:flutter/services.dart' as rootBundle;
+
+import '../../database/local.dart';
+
 
 class MainController extends GetxController {
   List<Dummy> dummyDataList = [];
@@ -12,16 +13,9 @@ class MainController extends GetxController {
     getDummyData();
   }
 
-  Future<List<Dummy>> ReadJsonData() async {
-    final jsondata =
-        await rootBundle.rootBundle.loadString('assets/local_data/data.json');
-
-    final list = json.decode(jsondata) as List<dynamic>;
-    return list.map((e) => Dummy.fromJson(e)).toList();
-  }
 
   getDummyData() {
-    ReadJsonData().then((value) {
+    LocalDatabase.ReadJsonData().then((value) {
       dummyDataList = value;
       update();
     }).catchError((e) {

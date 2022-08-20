@@ -75,7 +75,13 @@ class MainScreen extends StatelessWidget {
                                 mainController.dummyDataList[index].dose,
                                 mainController.dummyDataList[index].strength);
                           })
-                      : SizedBox(),
+                      : SizedBox(
+                        height: Get.height * .5,
+                        child: Center(
+                          child: Text("No data"),
+                        ),
+
+                  ),
                 );
               },
             ),
